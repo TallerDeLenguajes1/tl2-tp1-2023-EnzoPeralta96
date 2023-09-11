@@ -1,4 +1,4 @@
-namespace GestionPedidos;
+namespace GestionCadeteria;
 
 public enum EstadoPedido
 {
@@ -16,9 +16,6 @@ public class Pedido
     private Cliente cliente;
     private Cadete cadete;
 
-    
-
-
     public int NroPedido { get => nroPedido;}
     public string ObservacionPedido { get => observacionPedido; }
     
@@ -33,21 +30,14 @@ public class Pedido
         this.estado = estado;
     }
 
-
-    
-
-    public void VerDireccionCliente()
+    public string GetDireccionCliente()
     {
-        Console.WriteLine("Dirección Cliente:"+ cliente.Direccion);
+        return cliente.Direccion;
     }
 
-    public void VerDatosCliente()
+    public string VerDatosCliente()
     {
-        Console.WriteLine("***** Datos Cliente ******");
-        Console.WriteLine("-Nombre Cliente:"+cliente.Nombre);
-        Console.WriteLine("-Telefono:"+cliente.Telefono);
-        Console.WriteLine("-Dirección:"+cliente.Direccion);
-        Console.WriteLine("-Referencia:"+cliente.DatosReferenciaDireccion);
+       return cliente.GetInformacionCliente();
     }
 
 

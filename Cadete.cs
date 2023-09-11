@@ -1,4 +1,4 @@
-namespace GestionPedidos;
+namespace GestionCadeteria;
 
 public class Cadete
 {

@@ -1,4 +1,4 @@
-﻿namespace GestionPedidos;
+﻿namespace GestionCadeteria;
 internal class Program
 {
     private static void Main(string[] args)
@@ -250,7 +250,7 @@ internal class Program
             }
         }
 
-        Informes.InformeFinalJornada(cadeteria);
+        //Informes.InformeFinalJornada(cadeteria);
     }
 }
 

@@ -1,4 +1,4 @@
-namespace GestionPedidos;
+namespace GestionCadeteria;
 
 public class Cadeteria
 {
@@ -164,47 +164,6 @@ public class Cadeteria
         }
         return cantEliminado;
     }
-
-
-    /*private Pedido BuscarPed(int idCadete, int nroPedido)
-    {
-        Pedido pedidoBuscado = null;
-
-        Cadete cadeteBuscado = BuscarCadeteXId(idCadete);
-
-        if (cadeteBuscado != null)
-        {
-            pedidoBuscado = cadeteBuscado.Pedidos.Find(pedido => pedido.NroPedido == nroPedido);
-        }
-
-
-        return pedidoBuscado;
-    }*/
-
-    /* public void RecibirPedido(int idCadete, int nroPedido, string observacionPedido,string nombreCliente,string direccionCliente,long telefonoCliente, string datosReferencia)
-   {
-       var nuevoPedido = darDeAltaPedidio(nroPedido,observacionPedido,nombreCliente,direccionCliente,telefonoCliente,datosReferencia,EstadoPedido.Ingresado);
-       asignarPedidoCadete(idCadete,nuevoPedido);
-   }*/
-
-    /*private Pedido BuscarPed(int idCadete, int idPedido)
-    {   
-        Pedido pedidoBuscado = null;
-        foreach (var cadete in cadetes)
-        {
-            if (cadete.Id == idCadete)
-            {
-                foreach (var pedido in cadete.Pedidos)
-                {
-                    if (pedido.NroPedido == idPedido)
-                    {
-                       pedidoBuscado = pedido;
-                    }
-                }
-            }
-        }
-        return pedidoBuscado;
-    }*/
 
 
 
