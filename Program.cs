@@ -3,14 +3,50 @@
     {
         private static void Main(string[] args)
         {
-            string rutaDatosCadeteria = "cadeteria.csv";
-            string rutaDatosCadetes = "cadetes.csv";
-            string inputMenu;
-            int opcionMenu;
+            string DatosCadeteriaCSV = "cadeteria.csv";
+            string DatosCadetesCSV = "cadetes.csv";
+            string DatosCadeteriaJSON = "cadeteria.json";
+            string DatosCadeteJSON = "cadetes.json";
+            dynamic cadeteria;
+            
+            string inputMenu, inputArchivo;
+            int opcionMenu, opcionArchivo;
             bool programaEnUso = true;
-        
 
-            var Helper = new HelperDeArchivo();
+            
+
+            do
+            {
+                Console.WriteLine("Cargar datos Cadeteria con:\n-1: archivo CSV\n-2:archivo JSON");
+                inputArchivo = Console.ReadLine();
+            } while (string.IsNullOrEmpty(inputArchivo));
+
+            if (int.TryParse(inputArchivo,out opcionArchivo) && 1<= opcionArchivo && opcionArchivo<= 2)
+            {
+                switch (opcionArchivo)
+                {
+                    case 1:
+                        AccesoADatos AccesoADatos1 = new AccesoCSV();
+                        cadeteria = AccesoADatos1.CrearCadeteria(DatosCadeteriaCSV);
+                        AccesoADatos1.CargarCadetes(DatosCadetesCSV, cadeteria.cadetes);
+                        break;
+                    case 2:
+                        AccesoADatos accesoADatos2 = new AccesoJSON();
+                        cadeteria = accesoADatos2.CrearCadeteria(DatosCadeteriaJSON);
+                        break;
+                }
+            }
+
+            do
+            {
+                Console.WriteLine("Cargar datos cadetes con:\n-1: archivo CSV\n-2:archivo JSON");
+                inputArchivo = Console.ReadLine();
+            } while (string.IsNullOrEmpty(inputArchivo));
+
+            
+
+
+            
             var cadeteria = Helper.CrearCadeteria(rutaDatosCadeteria);
             Helper.CargarListaCadetes(rutaDatosCadetes,cadeteria.Cadetes);
 
