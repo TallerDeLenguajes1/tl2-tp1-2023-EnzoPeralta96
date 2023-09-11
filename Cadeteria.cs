@@ -37,13 +37,16 @@ public class Cadeteria
         return cadetes.Find(cadete => cadete.Id == idCadete);
     }
 
-    public void AsignarCadeteAPedido(int idCadete, int nroPedido)
+    public bool AsignarCadeteAPedido(int idCadete, int nroPedido)
     {
+        bool pedidioAsignado = false;
         var pedido = BuscarPedido(nroPedido);
         if (pedido!= null)
         {
             pedido.Cadete = BuscarCadeteXId(idCadete);
+            pedidioAsignado = true;
         }
+        return pedidioAsignado;
     }
 
     public double JornalACobrar(int idCadete)
@@ -69,9 +72,10 @@ public class Cadeteria
     {
         bool EstadoCambiado = false;
         var pedidoAcambiarEstado = BuscarPedido(nroPedido);
-        pedidoAcambiarEstado.Estado = nuevoEstado;
-        if (pedidoAcambiarEstado.Estado == nuevoEstado)
+        
+        if (pedidoAcambiarEstado!=null)
         {
+            pedidoAcambiarEstado.Estado = nuevoEstado;
             EstadoCambiado = true;
         }
         return EstadoCambiado;
@@ -96,14 +100,71 @@ public class Cadeteria
         bool pedidoEliminado = false;
 
         var pedido = BuscarPedido(nroPedido);
-        pedidos.Remove(pedido);
 
-        if (BuscarPedido(nroPedido)==null)
+        if (pedido != null)
         {
+            pedidos.Remove(pedido);
             pedidoEliminado = true;
         }
         return pedidoEliminado;
     }
+
+    public int CantidadPedidosRecibidos()
+    {
+        return pedidos.Count();
+    }
+    public int CantidadPedidosEntregados()
+    {
+        int cantEntregados=0;
+        foreach (var pedido in pedidos)
+        {
+            if (pedido.Estado == EstadoPedido.Entregado)
+            {
+                cantEntregados++;
+            }
+        }
+        return cantEntregados;
+    }
+
+    public int CantidadPedidosIngresados()
+    {
+        int cantEntregados=0;
+        foreach (var pedido in pedidos)
+        {
+            if (pedido.Estado == EstadoPedido.Ingresado)
+            {
+                cantEntregados++;
+            }
+        }
+        return cantEntregados;
+    }
+
+    public int CantidadPedidosEnCamino()
+    {
+        int cantEnCamino=0;
+        foreach (var pedido in pedidos)
+        {
+            if (pedido.Estado == EstadoPedido.EnCamino)
+            {
+                cantEnCamino++;
+            }
+        }
+        return cantEnCamino;
+    }
+   
+    public int CantidadPedidosCancelados(){
+        int cantEliminado=0;
+
+        foreach (var pedido in pedidos)
+        {
+            if (pedido.Estado == EstadoPedido.Cancelado)
+            {
+                cantEliminado++;
+            }
+        }
+        return cantEliminado;
+    }
+
 
     /*private Pedido BuscarPed(int idCadete, int nroPedido)
     {

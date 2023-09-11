@@ -3,7 +3,7 @@ using GestionPedidos;
 
 public abstract class AccesoADatos
 {
-    public bool ExisteArchivo(string rutaArchivo)
+    protected bool ExisteArchivo(string rutaArchivo)
     {
         if (File.Exists(rutaArchivo))
         {
@@ -23,8 +23,9 @@ public abstract class AccesoADatos
             return false;
         }
     }
-    public abstract void CargarCadetes(string rutaArchivo, List<Cadete> cadetes);
+    
     public abstract Cadeteria CrearCadeteria(string rutaDatosCadeteria);
+    public abstract List<Cadete> CargarCadetes(string rutaArchivo);
 
 
 }
@@ -48,10 +49,11 @@ public class AccesoCSV : AccesoADatos
 
         return cadeteria; 
     }
-    public override void CargarCadetes(string rutaArchivo, List<Cadete> cadetes)
+    public override List<Cadete> CargarCadetes(string rutaArchivo)
     {
-       if (ExisteArchivo(rutaArchivo))
-       {
+        List<Cadete> cadetes = null;
+        if (ExisteArchivo(rutaArchivo))
+        {
             using (var infoCadete = new StreamReader(rutaArchivo))
             {
                 while (!infoCadete.EndOfStream)
@@ -66,7 +68,8 @@ public class AccesoCSV : AccesoADatos
                     cadetes.Add(new Cadete(id,nombre,direccion,telefono));     
                 }
             }
-       }
+        }
+        return cadetes;
     }
 
    
@@ -74,27 +77,6 @@ public class AccesoCSV : AccesoADatos
 
 public class AccesoJSON : AccesoADatos
 {
-    private List<Cadete> LeerJsonCadetes(string rutaArchivo)
-    {
-        var cadetes = new List<Cadete>();
-
-        if(ExisteArchivo(rutaArchivo))
-        {
-            string TextoJson = File.ReadAllText(rutaArchivo);
-
-            if (!string.IsNullOrEmpty(TextoJson))//redundante
-            {
-                cadetes = JsonSerializer.Deserialize<List<Cadete>>(TextoJson);
-            }
-        }
-        return cadetes;
-    }
-
-    public override void CargarCadetes(string rutaArchivo, List<Cadete> cadetes)
-    {
-        cadetes = LeerJsonCadetes(rutaArchivo);
-    }
-
     public override Cadeteria CrearCadeteria(string rutaArchivo)
     {
         Cadeteria cadeteria = null;
@@ -105,4 +87,21 @@ public class AccesoJSON : AccesoADatos
         }
         return cadeteria;
     }
+    public override List<Cadete> CargarCadetes(string rutaArchivo)
+    {
+        var cadetes = new List<Cadete>();
+
+        if(ExisteArchivo(rutaArchivo))
+        {
+            string TextoJson = File.ReadAllText(rutaArchivo);
+            cadetes = JsonSerializer.Deserialize<List<Cadete>>(TextoJson); 
+        }
+        return cadetes;
+    }
+
+  
+
+
+
+
 }
