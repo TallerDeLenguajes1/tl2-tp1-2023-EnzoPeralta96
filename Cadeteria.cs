@@ -109,9 +109,17 @@ public class Cadeteria
         return pedidoEliminado;
     }
 
-    public int CantidadPedidosRecibidos()
+    public int CantidadPedidosAsignados(int idCadete)
     {
-        return pedidos.Count();
+        int cantidadPedidosAsignados = 0;
+        foreach (var pedido in pedidos)
+        {
+            if (pedido.Cadete.Id==idCadete)
+            {
+                cantidadPedidosAsignados++;
+            }
+        }
+        return cantidadPedidosAsignados;
     }
     public int CantidadPedidosEntregados()
     {
